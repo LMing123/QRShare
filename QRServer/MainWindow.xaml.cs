@@ -18,6 +18,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Extensions.Hosting;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace QRServer
 {
@@ -25,24 +27,29 @@ namespace QRServer
     {
        public BitmapImage Img { get; set; }
     }
+   
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+       
         public MainWindow()
         {
             InitializeComponent();
+            var handle = new WindowInteropHelper(this).EnsureHandle();
+            var acrylic = new AcrylicHelper(handle);
+            acrylic.SetAcrylic();
             Init();
         }
         private void Init()
         {
-            Task.Run( ()=> QRServerWeb.Program.CreateHostBuilder(null).Build().Run());
+            //Task.Run( ()=> QRServerWeb.Program.CreateHostBuilder(null).Build().Run());
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(GetIPAdress(), QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
-            var pic=qrCode.GetGraphic(200);
+            var pic=qrCode.GetGraphic(20, System.Drawing.Color.Black, System.Drawing.Color.Azure,true);
             MemoryStream memoryStream = new MemoryStream();
             pic.Save(memoryStream, ImageFormat.Png);
 

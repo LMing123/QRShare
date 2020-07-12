@@ -44,7 +44,7 @@ namespace QRServer
         }
         private void Init()
         {
-            //Task.Run( ()=> QRServerWeb.Program.CreateHostBuilder(null).Build().Run());
+            Task.Run( ()=> QRServerWeb.Program.CreateHostBuilder(null).Build().Run());
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(GetIPAdress(), QRCodeGenerator.ECCLevel.Q);

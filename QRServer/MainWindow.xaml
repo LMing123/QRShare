@@ -14,6 +14,9 @@
     </WindowChrome.WindowChrome>-->
   
     <Grid >
-        <Image x:Name="QR_Img"/>
+        <StackPanel Height="400" Width="350">
+            <Image x:Name="QR_Img" Width="{Binding Path=Width}" Height="{Binding Path=Width}"/>
+            <CheckBox></CheckBox>
+        </StackPanel>
     </Grid>
 </Window>
